@@ -1,8 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://cf0xq030pbdwa"]
+[gd_scene load_steps=4 format=3 uid="uid://cf0xq030pbdwa"]
 
+[ext_resource type="PackedScene" uid="uid://6i1bjpigp206" path="res://tile_map.tscn" id="1_f7q00"]
 [ext_resource type="PackedScene" uid="uid://ys4ixm7pj5cf" path="res://Player/player.tscn" id="1_ppp3u"]
+[ext_resource type="Script" path="res://scenes/follow cam.gd" id="3_8xjho"]
 
 [node name="World" type="Node2D"]
 
+[node name="TileMap" parent="." instance=ExtResource("1_f7q00")]
+layer_2/navigation_enabled = false
+
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_ppp3u")]
+z_index = 0
+y_sort_enabled = false
 position = Vector2(117, 68)
+
+[node name="follow cam" type="Camera2D" parent="CharacterBody2D" node_paths=PackedStringArray("tilemap")]
+limit_left = 0
+limit_top = 0
+script = ExtResource("3_8xjho")
+tilemap = NodePath("../../TileMap")
