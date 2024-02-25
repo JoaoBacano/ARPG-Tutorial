@@ -1,21 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://cf0xq030pbdwa"]
+[gd_scene load_steps=7 format=3 uid="uid://cf0xq030pbdwa"]
 
+[ext_resource type="Script" path="res://scenes/world.gd" id="1_at8cg"]
 [ext_resource type="PackedScene" uid="uid://6i1bjpigp206" path="res://tile_map.tscn" id="1_f7q00"]
 [ext_resource type="PackedScene" uid="uid://ys4ixm7pj5cf" path="res://Player/player.tscn" id="1_ppp3u"]
+[ext_resource type="PackedScene" uid="uid://ckt3g8cpxtn0u" path="res://enemies/slime.tscn" id="2_db7ww"]
 [ext_resource type="Script" path="res://scenes/follow cam.gd" id="3_8xjho"]
+[ext_resource type="PackedScene" uid="uid://yt7ei2s0hokp" path="res://ui/hearts_container.tscn" id="5_bg6y7"]
 
 [node name="World" type="Node2D"]
+script = ExtResource("1_at8cg")
 
 [node name="TileMap" parent="." instance=ExtResource("1_f7q00")]
 layer_2/navigation_enabled = false
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("1_ppp3u")]
+[node name="Player" parent="TileMap" instance=ExtResource("1_ppp3u")]
 z_index = 0
 y_sort_enabled = false
 position = Vector2(117, 68)
+maxHealth = 5
 
-[node name="follow cam" type="Camera2D" parent="CharacterBody2D" node_paths=PackedStringArray("tilemap")]
+[node name="follow cam" type="Camera2D" parent="TileMap/Player" node_paths=PackedStringArray("tilemap")]
 limit_left = 0
 limit_top = 0
 script = ExtResource("3_8xjho")
-tilemap = NodePath("../../TileMap")
+tilemap = NodePath("../..")
+
+[node name="slime" parent="TileMap" instance=ExtResource("2_db7ww")]
+position = Vector2(215, 63)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="heartsContainer" parent="CanvasLayer" instance=ExtResource("5_bg6y7")]
