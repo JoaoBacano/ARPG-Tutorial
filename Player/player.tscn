@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ys4ixm7pj5cf"]
+[gd_scene load_steps=15 format=3 uid="uid://ys4ixm7pj5cf"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_b0400"]
 [ext_resource type="Texture2D" uid="uid://r2f3vuhshs3d" path="res://art/player_sprites.png" id="1_ujfr8"]
@@ -105,6 +105,49 @@ size = Vector2(14, 4)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_88vwv"]
 size = Vector2(14, 14)
 
+[sub_resource type="Animation" id="Animation_shk12"]
+resource_name = "hurtBlink"
+length = 0.4
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.0002, 0.0003, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.00784314, 0, 0.545098), Color(1, 0.00784314, 0, 0.545098), Color(1, 0.00784314, 0, 0.545098), Color(1, 0.00784314, 0, 0.545098), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ivw52"]
+resource_name = "new_animation"
+
+[sub_resource type="Animation" id="Animation_cp6pw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.00784314, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_msafp"]
+_data = {
+"RESET": SubResource("Animation_cp6pw"),
+"hurtBlink": SubResource("Animation_shk12"),
+"new_animation": SubResource("Animation_ivw52")
+}
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
@@ -112,10 +155,18 @@ texture_filter = 1
 script = ExtResource("1_b0400")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 2
 texture = ExtResource("1_ujfr8")
 offset = Vector2(0, -8)
 hframes = 4
 vframes = 7
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D"]
+offset_left = -20.0
+offset_top = -25.0
+offset_right = 20.0
+offset_bottom = 15.0
+color = Color(1, 0.00784314, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -133,4 +184,13 @@ collision_mask = 3
 position = Vector2(0, -7)
 shape = SubResource("RectangleShape2D_88vwv")
 
+[node name="Effects" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_msafp")
+}
+
+[node name="hurtTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_exited" from="hurtBox" to="." method="_on_hurt_box_area_exited"]

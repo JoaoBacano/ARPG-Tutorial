@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://6i1bjpigp206"]
+[gd_scene load_steps=11 format=3 uid="uid://6i1bjpigp206"]
 
 [ext_resource type="Texture2D" uid="uid://bwgu0obcaol0g" path="res://art/TilesetFloor.png" id="1_04em7"]
 [ext_resource type="Texture2D" uid="uid://b1p4bw51j5ysr" path="res://art/TilesetNature.png" id="2_8wicg"]
+[ext_resource type="PackedScene" uid="uid://b72k23e8fte61" path="res://collectables/life_pot.tscn" id="3_7lbv3"]
 [ext_resource type="Texture2D" uid="uid://1i0y22l1jjay" path="res://art/animated_flower.png" id="3_r1beb"]
+[ext_resource type="PackedScene" uid="uid://cceurodulngyy" path="res://collectables/sword.tscn" id="4_jq3ga"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8fjel"]
 texture = ExtResource("1_04em7")
@@ -2808,6 +2810,11 @@ texture = ExtResource("2_8wicg")
 11:20/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 11:20/0/physics_layer_0/angular_velocity = 0.0
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_s18ko"]
+resource_name = "Collectbles"
+scenes/1/scene = ExtResource("3_7lbv3")
+scenes/2/scene = ExtResource("4_jq3ga")
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ujqgg"]
 texture = ExtResource("3_r1beb")
 0:0/animation_frame_0/duration = 0.4
@@ -2828,6 +2835,7 @@ terrain_set_0/terrain_0/color = Color(0.729412, 0, 0.0901961, 1)
 sources/0 = SubResource("TileSetAtlasSource_8fjel")
 sources/1 = SubResource("TileSetAtlasSource_tdq0y")
 sources/4 = SubResource("TileSetAtlasSource_ujqgg")
+sources/2 = SubResource("TileSetScenesCollectionSource_s18ko")
 
 [node name="TileMap" type="TileMap"]
 y_sort_enabled = true
@@ -2841,3 +2849,5 @@ layer_2/name = "trees"
 layer_2/y_sort_enabled = true
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array()
+layer_3/name = "Collectbles"
+layer_3/tile_data = PackedInt32Array(458757, 2, 65536, 458759, 2, 65536, 458763, 2, 65536, 131087, 2, 65536, 327694, 2, 65536, 6, 2, 65536, 8, 2, 65536, 327684, 2, 131072, 393220, 2, 131072, 262148, 2, 131072, 65546, 2, 131072, 12, 2, 131072)
